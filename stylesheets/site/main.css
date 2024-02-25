@@ -1,0 +1,65 @@
+.card-price::before {
+    content: "$";
+}
+
+.navbar-custom-tooltip {
+    --bs-tooltip-bg: var(--bd-violet-bg);
+    --bs-tooltip-color: var(--bs-white);
+}
+
+.truncate {
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    height: 30px;
+}
+
+.newest-products {
+    height: 25vw; 
+    width: 35vw; 
+    padding: 3vw 2vw;
+}
+
+.truncate-neat {
+    display: -webkit-box;
+    height: 60px;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    /* Fallback for non-webkit */
+    max-height: 3.6rem; /* (2 lines * line-height) + padding */
+    line-height: 1.8rem; 
+}
+
+.neat-products {
+    height: 250px; 
+    width: 400px; 
+    padding: 40px 1vw;
+}
+
+.top-products {
+    height: 120px; 
+    width: 120px; 
+    padding: 10px 0.25vw;
+}
+
+.truncate-top {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    max-height: 3.6rem;
+    line-height: 1.8rem; 
+    height: 60px;
+}
+
+.truncate-top-des {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    /* Fallback for non-webkit */
+    max-height: 3.6rem; /* (2 lines * line-height) + padding */
+    line-height: 1.8rem; 
+    color: rgb(100, 100, 100);
+}

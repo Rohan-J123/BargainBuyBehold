@@ -1,0 +1,555 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./Images/Icon.png">
+
+    <title>Bargain, Buy and Behold </title>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script src="./scripts/firebase/config.js"></script>
+    
+    <link rel="stylesheet" href="./stylesheets/bootstrap/main.css">
+    <script src="./scripts/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="./stylesheets/googlefonts/main.css">
+
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <link rel="stylesheet" href="./stylesheets/site/main.css"/>
+    <link rel="stylesheet" href="./stylesheets/login/main.css">
+
+    <script src="./scripts/site/account.js"></script>
+</head>
+
+<body>
+    <!-- Start Top Bar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid" style="background-color: #e3f2fd;;">
+            <!-- <a class="navbar-brand" href="#" class="">BargainBuyBehold</a> -->
+            <img src="./Images/Icon.png" style="width: 60px; margin-bottom: 10px; margin-top: 10px;">
+            <p class="protest-guerrilla-regular" style="font-size: calc(15px + 2vw); padding-left: 10px; margin-bottom: 0%; cursor: pointer;" onclick='window.location.href = "./site.html";'><i><u>BargainBuyBehold</u></i></p>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin-bottom: 15px; margin-top: 15px;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="border-radius: 10px;">
+                <div class="d-flex justify-content-center" style="display: flex; flex: 1; height: 40px; margin-bottom: 10px; margin-top: 10px;">
+                    <div class="dropdown">
+                        <button data-bs-toggle="dropdown" aria-expanded="false">
+                            <p style="cursor: default;"><span class="material-symbols-outlined" style="position: relative; font-size: x-large; left: 150%; width: 30px; border-color: rgb(215, 215, 215); height: 30px; border-width: 2px; border-style: solid; border-radius: 50px; margin-top: 5px; padding-top: 2.5px; padding-left: 1px; cursor: pointer; color: rgb(0, 136, 255);">filter_alt</span></p>
+                        </button>
+                        <ul class="dropdown-menu" id="filter-drop-menu" style="margin-left: 50px;">
+                        </ul>
+                    </div>
+                    <input id="searchInput" class="form-control" id="confirmPassword" style="text-align: center; border-radius: 30px; margin-left: 10px; font-size: large; width: 70%;" placeholder="Search Items">
+                    <span class="search-icon" style="position: relative; left: -35px; font-size: large; border-color: rgb(215, 215, 215); border-width: 2px; border-style: solid; border-radius: 50px; width: 30px; height: 30px; margin-top: 5px; cursor: pointer;">&#128269;</span>
+                </div>
+                <ul class="menu d-flex justify-content-center text-center" style="align-items: center;">
+                    <li><a href="#">
+                        <span class="material-symbols-outlined" style="font-size: 40px;" onclick="accountOpen()">
+                            person
+                        </span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="material-symbols-outlined" style="font-size: xx-large;" onclick="openWishlist()">bookmarks
+                            <span class="position-absolute top-40 start-75 translate-middle badge rounded-pill bg-danger" style="height: 20px; font-size: x-small;" id="wishlistBadge">
+                                0
+                                <span class="visually-hidden">Items In Wishlist</span>
+                            </span>
+                        </span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="material-symbols-outlined" style="font-size: xx-large;" onclick="openShoppingCart()">shopping_cart
+                            <span class="position-absolute top-40 start-75 translate-middle badge rounded-pill bg-danger" style="height: 20px; font-size: x-small;" id="shoppingCartBadge">
+                                0
+                                <span class="visually-hidden">Items In Cart</span>
+                            </span>
+                        </span>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="carouselExampleCaptions" class="carousel slide" style="align-items: center; overflow: hidden; height: 35vw;">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner" style="width: 110%; left: -5%;">
+            <div class="carousel-item active">
+                <img src="./Images/Iphone.jpg" class="d-block w-100" alt="IPhone 9">
+                <div class="carousel-caption d-none d-md-block" style="top: 75%;">
+                    <h5><b>An Apple Mobile Which Is Nothing Like Apple</b></h5>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="./Images/Macbook.jpg" class="d-block w-100" alt="Samsung Galaxy Book S">
+                <div class="carousel-caption d-none d-md-block" style="top: 67%;">
+                    <h5><b>Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched</b></h5>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="./Images/AirPods.jpg" class="d-block w-100" alt="Infinix Inbook X1 Ci3">
+                <div class="carousel-caption d-none d-md-block" style="top: 75%;">
+                    <h5><b>Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey, 1 Year Warranty</b></h5>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="row column text-center" style="margin-top: 20px;">
+        <h2>Our Newest Products</h2>
+        <hr>
+    </div>
+
+    <div class="row small-up-2 large-up-4">
+        <div class="column">
+            <img class="thumbnail newest-products" src="https://placehold.it/300x400" id="newest-products-1-thumbnail" onclick="getCard('9')">
+            <h5 id="newest-products-1-title" class="truncate">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="newest-products-1-cost">$400</p>
+            <a href="#" class="button expanded" onclick="onAddToCart(9)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail newest-products" src="https://placehold.it/300x400" id="newest-products-2-thumbnail" onclick="getCard('10')">
+            <h5 id="newest-products-2-title" class="truncate">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="newest-products-2-cost">$400</p>
+            <a href="#" class="button expanded" onclick="onAddToCart(10)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail newest-products" src="https://placehold.it/300x400" id="newest-products-3-thumbnail" onclick="getCard('11')">
+            <h5 id="newest-products-3-title" class="truncate">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="newest-products-3-cost">$400</p>
+            <a href="#" class="button expanded" onclick="onAddToCart(11)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail newest-products" src="https://placehold.it/300x400" id="newest-products-4-thumbnail" onclick="getCard('12')">
+            <h5 id="newest-products-4-title" class="truncate">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="newest-products-4-cost">$400</p>
+            <a href="#" class="button expanded" onclick="onAddToCart(12)">Add To Cart</a>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row column">
+        <div class="callout primary">
+            <h3>Really big special this week on items.</h3>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row column text-center">
+        <h2>Some Other Neat Products</h2>
+        <hr>
+    </div>
+
+    <div class="row small-up-2 medium-up-3 large-up-6">
+        <div class="column">
+            <img class="thumbnail neat-products" src="https://placehold.it/300x400" id="neat-products-1-thumbnail" onclick="getCard('1')">
+            <h5 id="neat-products-1-title" class="truncate-neat">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="neat-products-1-cost">$400</p>
+            <a href="#" class="button small expanded hollow" onclick="onAddToCart(1)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail neat-products" src="https://placehold.it/300x400" id="neat-products-2-thumbnail" onclick="getCard('2')">
+            <h5 id="neat-products-2-title" class="truncate-neat">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="neat-products-2-cost">$400</p>
+            <a href="#" class="button small expanded hollow" onclick="onAddToCart(2)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail neat-products" src="https://placehold.it/300x400" id="neat-products-3-thumbnail" onclick="getCard('3')">
+            <h5 id="neat-products-3-title" class="truncate-neat">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="neat-products-3-cost">$400</p>
+            <a href="#" class="button small expanded hollow" onclick="onAddToCart(3)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail neat-products" src="https://placehold.it/300x400" id="neat-products-4-thumbnail" onclick="getCard('4')">
+            <h5 id="neat-products-4-title" class="truncate-neat">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="neat-products-4-cost">$400</p>
+            <a href="#" class="button small expanded hollow" onclick="onAddToCart(4)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail neat-products" src="https://placehold.it/300x400" id="neat-products-5-thumbnail" onclick="getCard('5')">
+            <h5 id="neat-products-5-title" class="truncate-neat">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="neat-products-5-cost">$400</p>
+            <a href="#" class="button small expanded hollow" onclick="onAddToCart(5)">Add To Cart</a>
+        </div>
+        <div class="column">
+            <img class="thumbnail neat-products" src="https://placehold.it/300x400" id="neat-products-6-thumbnail" onclick="getCard('6')">
+            <h5 id="neat-products-6-title" class="truncate-neat">Nulla At Nulla Justo, Eget</h5>
+            <p class="card-price" id="neat-products-6-cost">$400</p>
+            <a href="#" class="button small expanded hollow" onclick="onAddToCart(6)">Add To Cart</a>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="medium-4 columns">
+            <h4>Top Products</h4>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-1-thumbnail" onclick="getCard('7')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-1-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-1-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-2-thumbnail" onclick="getCard('8')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-2-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-2-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-3-thumbnail" onclick="getCard('13')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-3-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-3-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+        </div>
+        <div class="medium-4 columns">
+            <h4>Top Products</h4>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-4-thumbnail" onclick="getCard('14')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-4-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-4-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-5-thumbnail" onclick="getCard('15')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-5-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-5-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-6-thumbnail" onclick="getCard('16')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-6-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-6-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+        </div>
+        <div class="medium-4 columns">
+            <h4>Top Products</h4>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-7-thumbnail" onclick="getCard('17')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-7-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-7-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-8-thumbnail" onclick="getCard('18')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-8-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-8-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+            <div class="media-object">
+                <div class="media-object-section">
+                    <img class="thumbnail top-products" src="https://placehold.it/100x100" id="top-products-9-thumbnail" onclick="getCard('19')">
+                </div>
+                <div class="media-object-section">
+                    <h5 id="top-products-9-title" class="truncate-top">Nunc Eu Ullamcorper Orci</h5>
+                    <p id="top-products-9-description" class="truncate-top-des">Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout large secondary" style="margin-top: 20px; padding-top: 40px; padding-bottom: 20px; padding-left: 1vw; padding-right: 1vw;">
+        <div class="row">
+            <div class="large-8 columns">
+                <p class="protest-guerrilla-regular" style="font-size: 25px; cursor: pointer;" onclick='window.location.href = "./site.html";'><i><u>BargainBuyBehold</u></i></p>
+                <p><b>Disclaimers:</b></p>
+                <p style="text-align: justify;">This website is affiliated with an ongoing project and is intended solely for demonstration purposes. Please refrain from making any purchases on this site as it does not feature any vendors. For your security, we advise against providing any sensitive information on this platform. Thank you for your understanding and cooperation.</p>
+            </div>
+            <div class="large-2 large-offset-2 columns">
+                <ul class="menu vertical">
+                    <!-- <li><a href="./admin.html">Admin</a></li>
+                    <li><a href="#">Code</a></li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="exampleModalLabel">Account Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div id="emailAccount" style="margin: 10px 20px; width: 90%; font-size: large;"></div>
+                                <div id="homeAddressAccount" style="margin: 10px 20px; width: 90%; font-size: large;"></div>
+                                <!-- <button type="button" class="btn btn-primary" style="margin: 10px 20px; width: 90%;">Save changes</button> -->
+                                <ul style="margin: 10px 37.5px; width: 90%; font-size: large; list-style: circle;">
+                                    <li><a href="#" style="width: 500px;" onclick="onUpdateAddress()">Update Address</a></li>
+                                    <li><a href="#" style="width: 500px;">Previous Orders</a></li>
+                                    <li><a href="#" style="width: 500px;" onclick="openWishlist()">Wishlist</a></li>
+                                    <li><a href="#" style="width: 500px;" onclick="openShoppingCart()">Shopping Cart</a></li>
+                                </ul>
+                                <button type="button" class="btn btn-outline-primary" style="margin: 10px 20px; flex: 1; width: 40%;" onclick="onPasswordChange()">Change Password</button>
+                                <button type="button" class="btn btn-outline-primary" style="margin: 10px 20px; flex: 1; width: 40%;" onclick="onLogout()">Logout</button>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="mb-3">
+                                    <label for="AddressTextArea" class="form-label">Address:</label>
+                                    <textarea class="form-control" id="AddressTextArea" rows="3"></textarea>
+                                </div>
+                                <div style="display: flex;">
+                                    <button type="button" class="btn btn-outline-dark" style="margin-right: 10px;" onclick="onBackAddress()">Back</button>
+                                    <button type="button" class="btn btn-outline-success" style="margin-left: 10px;" onclick="onSaveAddress()">Save</button>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="..." class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="visibility: hidden;" id="accountGotoAccount">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style="visibility: hidden;" id="accountGotoAddressSave">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="accountClose">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#accountModal" style="visibility: hidden;" id="AccountButton">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="exampleModalLabel">Change Password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="emailAccountPassword" style="margin: 10px 20px; width: 90%; font-size: large;"></div>
+                    <div class="mb-3" style="margin: 20px 20px;">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <input class="form-control" id="currentPassword" type="password"></input>
+                    </div>
+                    <div class="mb-3" style="margin: 10px 20px;">
+                        <label for="choosePassword" class="form-label">Choose Password</label>
+                        <input class="form-control" id="choosePassword" type="password"></input>
+                    </div>
+                    <div class="mb-3" style="margin: 10px 20px;">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input class="form-control" id="confirmPassword" type="password"></input>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" style="margin: 20px 20px;" onclick="changingPasswordFirebase()">CHANGE PASSWORD</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="accountOpenAgain()" style="width: 100px;">Back</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="cancelPassword" style="width: 100px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#passwordModal" style="visibility: hidden;" id="passwordButton">
+        Launch demo modal
+    </button>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal" id="card-button" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="exampleModalLabel">Item Description</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg" style="height: 55vh; padding-left: 20px; padding: 20px;" class="img-fluid rounded-start" alt="Card Image" id="card-image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h4 class="card-title" style="font-weight: bold;" id="card-title">Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) - Super Ultrawide Screen QLED</h4>
+                                    <p class="card-text" id="card-description">49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag.</p>
+                                    <p class="card-text"><small class="text-body-secondary" style="text-transform: capitalize;"  id="card-category">electronics</small></p>
+                                    <p style="font-size: large;" class="card-price" id="card-price">999.99</p>
+                                    <div style="display: flex; flex-wrap: wrap;">
+                                        <div style="flex: 1.5; padding: 10px 10px 10px 0px;">
+                                            <p style="margin-bottom: 20px;"><b>Audience Rating</b></p>
+                                            <div class="progress" role="progressbar" aria-label="Warning example" style="height: 30px; position: relative;">
+                                                <div class="progress-bar bg-warning" style="width: 10%;" id="card-rating-progress">
+                                                    <b style="font-size: large; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" id="card-rating-text">1.0</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="flex: 1.5; padding: 10px 10px 0px 10px;">
+                                            <p style="margin-bottom: 15px;"><b>Number of Ratings</b></p>
+                                            <p style="font-size: x-large;" id="card-count">130</p>
+                                        </div>
+                                        <div style="flex: 1; padding: 10px 10px 0px 10px;">
+                                            <button type="button" class="btn btn-outline-success" style="width: 100%; margin-bottom: 10px;" id="card-add-to-wishlist">Add To Wishlist</button>
+                                            <button type="button" class="btn btn-outline-warning" style="width: 100%;" id="card-add-to-cart">Add To Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="card-close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shoppingCartModal" id="shoppingCartOpenButton" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="shoppingCartModal" tabindex="-1" aria-labelledby="shoppingCartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="shoppingCartModalLabel">Shopping Cart</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="shoppingCartExample" class="carousel slide" style="height: 450px; overflow-y: scroll;">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" id="shoppingCartItems" style="padding: 10px;">
+                            </div>
+                            <div class="carousel-item" style="padding: 10px;">
+                                <div style="display: flex; flex-wrap: wrap;">
+                                    <div id="shoppingCartCheckOutItems" style="flex: 1;"></div>
+                                    <div style="width: 1px; background-color: lightgrey; margin: 0px 20px;"></div>
+                                    <div style="flex: 1;">
+                                        <div id="emailCheckout" style="margin: 35px 20px; font-size: large;"></div>
+                                        <div id="homeAddressCheckout" style="margin: 10px 20px; font-size: large;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#shoppingCartExample" data-bs-slide="prev" style="visibility: hidden;" id="shopping-cart-back">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#shoppingCartExample" data-bs-slide="next" style="visibility: hidden;" id="shopping-cart-checkout">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#wishlistModal" id="wishlistModalOpenButton" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="wishlistModal" tabindex="-1" aria-labelledby="wishlistModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="wishlistModalLabel">Wishlist</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExample" class="carousel slide" style="height: 450px; overflow-y: scroll;">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" id="wishlistModalItems" style="padding: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="spinner-border text-info" role="status" style="position: fixed; top: 50%; left: 50%; height: 100px; width: 100px; margin-left: -50px; margin-top: -100px; z-index: 2000;" id="spinner-circle">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+  
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+    <script src="./scripts/site/modal.js"></script>
+    <script src="./scripts/site/tooltips.js"></script>
+    <script src="./scripts/site/populateNewest.js"></script>
+    <script src="./scripts/site/populateNeat.js"></script>
+    <script src="./scripts/site/populateTop.js"></script>
+    <script src="./scripts/site/filter.js"></script>
+    <script src="./scripts/site/shoppingCart.js"></script>
+    <script src="./scripts/site/wishlist.js"></script>
+    <script src="./scripts/site/cardRetrieval.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+</body>
+</html>
+
