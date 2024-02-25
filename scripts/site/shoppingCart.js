@@ -49,7 +49,7 @@ function openShoppingCart(){
                         `<div style = "display: flex; flex-wrap: wrap;">
                             <button type="button" class="btn btn-danger" style="margin-left: 10px; height: 45px; margin-top: 20px; width: 120px; margin-right: 20px;" onclick="clearCart()">Clear Cart</button>
                             <button type="button" class="btn btn-success" style="margin-left: 10px; height: 45px; margin-top: 20px; width: 120px;" onclick="checkingOut()">Checkout</button>
-                            <h3 style = "flex: 1; text-align: right; padding-right: 30px; padding-top: 20px;">Total Amount: $` + totalPrice +`</h3>
+                            <h3 style = "flex: 1; text-align: right; padding-right: 30px; padding-top: 20px;">Total Amount: $` + totalPrice.toFixed(2) +`</h3>
                         </div>`;
                     }
                     count += 1;
