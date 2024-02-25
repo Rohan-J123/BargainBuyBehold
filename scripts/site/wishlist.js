@@ -5,6 +5,8 @@ function openWishlist(){
     const [key, value] = localStorage.getItem('key').split(';')[0].split('=');
     var user_doc = db.collection("users").doc(decodeURIComponent(value));
 
+    document.getElementById('spinner-circle').style.display = "block";
+
     cartDisplay.innerHTML = "";
 
     user_doc.get().then((doc) => {
@@ -24,7 +26,7 @@ function openWishlist(){
                 getDetails(item.toString()).then((details) => {
                     var detailsText = 
                     `<div style="display: flex; flex-wrap: wrap;">
-                        <div class="media-object" style="flex: 3; padding-right: 10px;">
+                        <div class="media-object" style="width: 750px; padding-right: 10px;">
                             <div class="media-object-section">
                                 <img class="thumbnail top-products" src="` + details['imageURL'] + `" onclick="getCard('` + item +`')">
                             </div>
@@ -49,7 +51,7 @@ function openWishlist(){
                         `<div style = "display: flex; flex-wrap: wrap;">
                             <button type="button" class="btn btn-danger" style="margin-left: 10px; height: 45px; margin-top: 20px; width: 150px; margin-right: 20px;" onclick="clearWishlist()">Clear Wishlist</button>
                             <button type="button" class="btn btn-warning" style="margin-left: 10px; height: 45px; margin-top: 20px; width: 150px;" onclick="addAllToCart()">Add All To Cart</button>
-                            <h3 style = "flex: 1; text-align: right; padding-right: 30px; padding-top: 20px;">Total Amount: $` + totalPrice +`</h3>
+                            <h2 style = "flex: 1; text-align: right; padding-top: 20px;">Subtotal: $` + totalPrice.toFixed(2) +`</h2>
                         </div>`;
                     }
                     count += 1;
@@ -57,6 +59,7 @@ function openWishlist(){
                     console.log("Error getting details:", error);
                 });
             });
+            document.getElementById('spinner-circle').style.display = "none";
             document.getElementById('wishlistModalOpenButton').click();
         } else {
             alert("Invalid ID");

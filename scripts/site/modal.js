@@ -1,5 +1,6 @@
 function accountOpen(){
     var button = document.getElementById('AccountButton');
+    document.getElementById('accountGotoAccount').click();
     button.click();
 }
 
@@ -15,8 +16,26 @@ function onUpdateAddress(){
     document.getElementById("accountGotoAddressSave").click();
 }
 
+function onUpdatePhoneNumber(){
+    document.getElementById("accountGotoPhoneNumberSave").click();
+}
+
+function onUpdateAddressCheckout(){
+    document.getElementById("shopping-cart-close").click();
+    accountOpen();
+    onUpdateAddress();
+}
+
+function onUpdatePhoneNumberCheckout(){
+    document.getElementById("shopping-cart-close").click();
+    accountOpen();
+    onUpdatePhoneNumber();
+}
+
+
 function onBackAddress(){
     document.getElementById('AddressTextArea').value = "";
+    document.getElementById('PhoneNumberTextArea').value = "";
     document.getElementById("accountGotoAccount").click();
 }
 
@@ -40,6 +59,29 @@ function onSaveAddress(){
     .catch((error) => {
         console.error('Error writing document: ', error);
         alert("Error Updating Address!");
+    });
+}
+
+function onSavePhoneNumber(){
+    document.getElementById('spinner-circle').style.display = "block";
+    var db = firebase.firestore();
+    const [key, value] = localStorage.getItem('key').split(';')[0].split('=');
+    var phoneNumber = document.getElementById('PhoneNumberTextArea').value;
+
+    db.collection('users').doc(decodeURIComponent(value)).update({
+        phoneNumber: phoneNumber
+    })
+    .then(() => {
+        console.log('Document successfully written!');
+        address();
+        alert("Phone Number Successfully Updated.");
+        document.getElementById('spinner-circle').style.display = "none";
+        onBackAddress();
+        document.getElementById('accountClose').click();
+    })
+    .catch((error) => {
+        console.error('Error writing document: ', error);
+        alert("Error Updating Phone Number!");
     });
 }
 
@@ -67,7 +109,9 @@ function address(){
             var d = doc.data();
 
             document.getElementById('homeAddressAccount').innerText = "Address: " + d['homeAddress'];
+            document.getElementById('phoneNumberAccount').innerText = "Phone Number: " + d['phoneNumber'];
             document.getElementById('homeAddressCheckout').innerText = "Address: " + d['homeAddress'];
+            document.getElementById('phoneNumberCheckout').innerText = "Phone Number: " + d['phoneNumber'];
         } else {
             alert("Invalid ID");
         }

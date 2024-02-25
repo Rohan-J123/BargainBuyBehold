@@ -7,6 +7,8 @@ function openShoppingCart(){
 
     cartDisplay.innerHTML = "";
 
+    document.getElementById('spinner-circle').style.display = "block";
+
     user_doc.get().then((doc) => {
         if (doc.exists) {
             var d = doc.data();
@@ -24,7 +26,7 @@ function openShoppingCart(){
                 getDetails(item.toString()).then((details) => {
                     var detailsText = 
                     `<div style="display: flex; flex-wrap: wrap;">
-                        <div class="media-object" style="flex: 3; padding-right: 10px;">
+                        <div class="media-object" style="width: 750px; padding-right: 10px;">
                             <div class="media-object-section">
                                 <img class="thumbnail top-products" src="` + details['imageURL'] + `" onclick="getCard('` + item +`')">
                             </div>
@@ -49,7 +51,7 @@ function openShoppingCart(){
                         `<div style = "display: flex; flex-wrap: wrap;">
                             <button type="button" class="btn btn-danger" style="margin-left: 10px; height: 45px; margin-top: 20px; width: 120px; margin-right: 20px;" onclick="clearCart()">Clear Cart</button>
                             <button type="button" class="btn btn-success" style="margin-left: 10px; height: 45px; margin-top: 20px; width: 120px;" onclick="checkingOut()">Checkout</button>
-                            <h3 style = "flex: 1; text-align: right; padding-right: 30px; padding-top: 20px;">Total Amount: $` + totalPrice.toFixed(2) +`</h3>
+                            <h2 style = "flex: 1; text-align: right; padding-top: 20px; padding-right: 20px;">Subtotal: $` + totalPrice.toFixed(2) +`</h2>
                         </div>`;
                     }
                     count += 1;
@@ -57,7 +59,9 @@ function openShoppingCart(){
                     console.log("Error getting details:", error);
                 });
             });
+            document.getElementById('spinner-circle').style.display = "none";
             document.getElementById('shoppingCartOpenButton').click();
+            document.getElementById('shopping-cart-back').click();
         } else {
             alert("Invalid ID");
         }
@@ -182,19 +186,24 @@ function checkingOut(){
                     </div>`;
                     totalPrice += parseFloat(details['price']);
                     cartDisplay.innerHTML += detailsText;
-                    if(count != l-1){
-                        cartDisplay.innerHTML += `<div style="width: 100%; height: 1px; background-color: lightgrey;"></div>`;
-                    }
                     count += 1;
+                    if(count != l-1){
+                        document.getElementById('priceCheckout').innerText = "Subtotal: $" + totalPrice.toFixed(2);
+                    }
                 }).catch((error) => {
                     console.log("Error getting details:", error);
                 });
             });
             document.getElementById('shopping-cart-checkout').click();
+            document.getElementById('shoppingCartExample').scrollTop = 0;
         } else {
             alert("Invalid ID");
         }
     }).catch((error) => {
         console.log("Error getting document:", error);
     });
+}
+
+function onlinePayment(){
+    alert("Since this is an illustration, this feature hasn't been enabled.");
 }

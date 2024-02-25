@@ -26,7 +26,8 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
                 shoppingCart: [],
                 wishlist: [],
                 previousOrders: [],
-                homeAddress: '-'
+                homeAddress: '-',
+                phoneNumber: '-'
             };
 
             db.collection('users').doc(email).set(initialData)
