@@ -29,7 +29,7 @@
     <script src="./scripts/site/account.js"></script>
 </head>
 
-<body style="background-color: #f9fcff;">
+<body style="background-color: #f4faff;">
     <!-- Start Top Bar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="padding: 0%;">
         <div class="container-fluid" style="background-color: #e3f2fd;">
@@ -48,8 +48,10 @@
                         <ul class="dropdown-menu" id="filter-drop-menu" style="margin-left: 50px;">
                         </ul>
                     </div>
-                    <input id="searchInput" class="form-control" id="confirmPassword" style="text-align: center; border-radius: 30px; margin-left: 10px; font-size: large; width: 70%;" placeholder="Search Items">
-                    <span class="search-icon" style="position: relative; left: -35px; font-size: large; border-color: rgb(215, 215, 215); border-width: 2px; border-style: solid; border-radius: 50px; width: 30px; height: 30px; margin-top: 5px; cursor: pointer;">&#128269;</span>
+                    <form id="searchForm" style="display: flex; margin-left: 10px; font-size: large; width: 70%;">
+                        <input id="searchInput" class="form-control" id="confirmPassword" style="border-radius: 30px; text-align: center;" placeholder="Search Items">
+                        <button style="position: relative; left: -35px; font-size: large; border-color: rgb(215, 215, 215); border-width: 2px; border-style: solid; border-radius: 50px; width: 30px; height: 30px; margin-top: 5px; cursor: pointer;"><span type="submit" class="search-icon">&#128269;</span></button>
+                    </form>
                 </div>
                 <ul class="menu d-flex justify-content-center text-center" style="align-items: center;">
                     <li><a href="#">
@@ -121,9 +123,7 @@
 
     <div class="row small-up-2 large-up-4">
         <div class="column">
-            <div class="image-container">
-                <img class="thumbnail newest-products" src="https://placehold.it/300x400" id="newest-products-1-thumbnail" onclick="getCard('9')">
-            </div>
+            <img class="thumbnail newest-products" src="https://placehold.it/300x400" id="newest-products-1-thumbnail" onclick="getCard('9')">
             <h5 id="newest-products-1-title" class="truncate">Nulla At Nulla Justo, Eget</h5>
             <p class="card-price" id="newest-products-1-cost">$400</p>
             <button type="button" class="btn btn-primary" onclick="onAddToCart(9)" style="width: 100%; --bs-btn-bg: rgb(0, 157, 255); --bs-btn-hover-bg: rgb(0, 133, 215); font-size: large; margin-bottom: 20px;">Add To Cart</button>
@@ -337,7 +337,7 @@
                                 <ul style="margin: 10px 37.5px; width: 90%; font-size: large; list-style: circle;">
                                     <li><a href="#" style="width: 500px;" onclick="onUpdatePhoneNumber()">Update Phone Number</a></li>
                                     <li><a href="#" style="width: 500px;" onclick="onUpdateAddress()">Update Address</a></li>
-                                    <li><a href="#" style="width: 500px;">Previous Orders</a></li>
+                                    <li><a href="#" style="width: 500px;" onclick="onCheckingPreviousOrders()">Previous Orders</a></li>
                                     <li><a href="#" style="width: 500px;" onclick="openWishlist()">Wishlist</a></li>
                                     <li><a href="#" style="width: 500px;" onclick="openShoppingCart()">Shopping Cart</a></li>
                                 </ul>
@@ -500,12 +500,14 @@
                                         <div id="homeAddressCheckout" style="margin: 10px 20px; font-size: large;"></div>
                                         <button type="button" class="btn btn-outline-primary" onclick="onUpdateAddressCheckout()" style="margin-bottom: 50px; display: block; margin-left: auto; margin-right: auto; width: 50%;  margin-top: 30px;">Update Address</button>
                                         <div style="height: 1px; background-color: lightgray; width: 100%;"></div>
-                                        <div id="priceCheckout" style="font-size: xx-large; text-align: center; padding: 20px;">$999</div>
+                                        <div id="priceCheckout" style="font-size: x-large; text-align: left; padding: 20px;">$999</div>
+                                        <div style="height: 1px; background-color: lightgray; width: 100%;"></div>
+                                        <div id="priceCheckoutTotal" style="font-size: xx-large; text-align: center; padding: 20px;">$999</div>
                                         <div style="height: 1px; background-color: lightgray; width: 100%;"></div>
                                         <div style="flex: 1; padding: 50px 20px 0px 20px;">
                                             <button type="button" class="btn btn-outline-primary" style="width: 100%; margin-bottom: 20px;" onclick="document.getElementById('shopping-cart-back').click();">Back</button>
                                             <button type="button" class="btn btn-warning" style="width: 100%; margin-bottom: 20px;" id="card-add-to-cart" onclick="onlinePayment()">Online Payment</button>
-                                            <button type="button" class="btn btn-success" style="width: 100%;" id="card-add-to-wishlist">Cash On Delivery</button>
+                                            <button type="button" class="btn btn-success" style="width: 100%;" id="card-add-to-wishlist" onclick="onCashPayment()">Cash On Delivery</button>
                                         </div>
                                     </div>
                                 </div>
@@ -548,6 +550,90 @@
         </div>
     </div>
 
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchModal" id="searchModalOpenButton" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="searchModalLabel">Search</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExample" class="carousel slide" style="height: 450px; overflow-y: scroll;">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" id="searchModalItems" style="padding: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal" id="filterModalOpenButton" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="filterModalLabel">Filter</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExample" class="carousel slide" style="height: 450px; overflow-y: scroll;">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" id="filterModalItems" style="padding: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previousOrdersModal" id="previousOrdersModalOpenButton" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="previousOrdersModal" tabindex="-1" aria-labelledby="previousOrdersModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="previousOrdersModalLabel">Previous Orders</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExample" class="carousel slide" style="height: 450px; overflow-y: scroll;">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" id="previousOrdersModalItems" style="padding: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="spinner-border text-info" role="status" style="position: fixed; top: 50%; left: 50%; height: 100px; width: 100px; margin-left: -50px; margin-top: -100px; z-index: 2000;" id="spinner-circle">
         <span class="visually-hidden">Loading...</span>
     </div>
@@ -562,7 +648,10 @@
     <script src="./scripts/site/filter.js"></script>
     <script src="./scripts/site/shoppingCart.js"></script>
     <script src="./scripts/site/wishlist.js"></script>
+    <script src="./scripts/site/search.js"></script>
+    <script src="./scripts/site/filterItems.js"></script>
     <script src="./scripts/site/cardRetrieval.js"></script>
+    <script src="./scripts/site/previousOrders.js"></script>
     <script>
         $(document).foundation();
     </script>

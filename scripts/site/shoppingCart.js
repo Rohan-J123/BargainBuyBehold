@@ -189,6 +189,8 @@ function checkingOut(){
                     count += 1;
                     if(count != l-1){
                         document.getElementById('priceCheckout').innerText = "Subtotal: $" + totalPrice.toFixed(2);
+                        document.getElementById('priceCheckout').innerText += "\nTax: $" + (totalPrice*0.3).toFixed(2);
+                        document.getElementById('priceCheckoutTotal').innerText = "Total: $" + (0.3*totalPrice + totalPrice).toFixed(2);
                     }
                 }).catch((error) => {
                     console.log("Error getting details:", error);
@@ -206,4 +208,53 @@ function checkingOut(){
 
 function onlinePayment(){
     alert("Since this is an illustration, this feature hasn't been enabled.");
+}
+
+function onCashPayment() {
+    var db = firebase.firestore();
+    const [key, value] = localStorage.getItem('key').split(';')[0].split('=');
+    var user_doc = db.collection("users").doc(decodeURIComponent(value));
+
+    user_doc.get().then((doc) => {
+        if (doc.exists) {
+            var d = doc.data();
+            var previousOrder = "";
+
+            d['shoppingCart'].forEach(function(item) {
+                previousOrder += item + " ";
+            });
+
+            var currentDate = new Date();
+            var day = currentDate.getDate();
+            var month = currentDate.getMonth() + 1;
+            var year = currentDate.getFullYear();
+            var formattedDate = day + '/' + month + '/' + year;
+
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+
+            // Format the time as desired
+            var formattedTime = hours + ':' + minutes + ':' + seconds;
+
+            var total = document.getElementById("priceCheckoutTotal").innerHTML.split('$')[1];
+
+            previousOrder += formattedDate + " " + formattedTime + " " + total;
+
+            var previousOrders = d['previousOrders'];
+            previousOrders.push(previousOrder);
+
+            user_doc.update({
+                previousOrders: previousOrders
+            }).then(() => {
+                clearCart();
+                alert("Payment Successful!")
+            }).catch((error) => {
+                console.error("Error updating document: ", error);
+            });
+        }
+    }).catch((error) => {
+        console.error("Error getting document: ", error);
+    });
 }

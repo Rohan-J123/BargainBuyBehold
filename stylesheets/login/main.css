@@ -6,3 +6,23 @@
     font-weight: 1000;
     font-style: normal;
 }
+
+img:hover{
+    transform: scale(1.05);
+    transition: 0.25s ease;
+}
+
+button:hover{
+    transform: scale(1.05);
+    transition: 0.25s ease;
+}
+
+span:hover{
+    transform: scale(1.05);
+    transition: 0.25s ease;
+}
+
+.userContent:hover{
+    transform: scale(1.02);
+    transition: 0.25s ease;
+}

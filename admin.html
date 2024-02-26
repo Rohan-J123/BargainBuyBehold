@@ -7,7 +7,7 @@
 	<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
+    
     <script src="./scripts/firebase/config.js"></script>
 
 	<link rel="stylesheet" href="./stylesheets/bootstrap/main.css">
@@ -15,75 +15,302 @@
 
 	<link rel="stylesheet" href="./stylesheets/googlefonts/main.css">
 
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+
 	<link rel="stylesheet" href="./stylesheets/login/main.css">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 	<link rel="icon" type="image/png" href="./Images/Icon.png">
+
+    <link rel="stylesheet" href="./stylesheets/site/main.css"/>
+    <link rel="stylesheet" href="./stylesheets/login/main.css">
+
+    <script src="./scripts/site/account.js"></script>
+
     <title>BargainBuyBehold Admin</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid" style="background-color: #e3f2fd;;">
-            <!-- <a class="navbar-brand" href="#" class="">BargainBuyBehold</a> -->
-            <img src="./Images/Icon.png" style="width: 60px; margin-bottom: 10px; margin-top: 10px;">
-            <p class="protest-guerrilla-regular" style="font-size: calc(15px + 2vw); padding-left: 10px; margin-bottom: 0%;"><i><u>BargainBuyBehold</u></i></p>
+	<nav class="navbar navbar-expand-lg bg-body-tertiary" style="padding: 0%;">
+        <div class="container-fluid" style="background-color: #e3f2fd;">
+            <img src="./Images/Icon.png" style="width: 50px;">
+            <p class="protest-guerrilla-regular" style="font-size: calc(15px + 2vw); padding-left: 10px; margin-bottom: 0%; cursor: pointer; width: calc(150px + 25vw);" onclick='window.location.href = "./site.html";'><i><u>BargainBuyBehold</u></i></p>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin-bottom: 15px; margin-top: 15px;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="border-radius: 10px;">
-                <p class="playfair-display-1" style="font-size: calc(15px + 2vw); flex: 1; text-align: center; padding-top: 10px; padding-right: 12.5vw;">ADMIN CONTROLS</p>
-            	<div style="display: flex; padding-top: 10px;">
-                    <a href="#" style="padding: 0px 10px;"><span class="material-symbols-outlined" style="font-size: 57.5px;" onclick="accountOpen()">person</span></a>
-                    <a href="#" style="padding: 0px 10px;">
-                        <span class="material-symbols-outlined" style="font-size: xxx-large;">bookmarks
-                            <span class="position-absolute top-40 start-75 translate-middle badge rounded-pill bg-danger" style="height: 20px; font-size: x-small;">
-                                0
-                                <span class="visually-hidden">Items In Cart</span>
-                            </span>
+            <div class="playfair-display-1" style="font-size: xxx-large; text-align: center; flex: 1;">Admin Controls</div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="border-radius: 10px; width: 10vw;">
+                <div class="d-flex justify-content-center" style="display: flex; flex: 1; height: 40px; margin-bottom: 10px; margin-top: 10px;">
+                </div>
+                <ul class="menu d-flex justify-content-center text-center" style="align-items: center;">
+                    <li><a href="#">
+                        <span class="material-symbols-outlined" style="font-size: 40px;" onclick="document.getElementById('AccountButton').click();">
+                            person
                         </span>
-                    </a>
-                    <a href="#" style="padding: 0px 10px;">
-                        <span class="material-symbols-outlined" style="font-size: xxx-large;">shopping_cart
-                            <span class="position-absolute top-40 start-75 translate-middle badge rounded-pill bg-danger" style="height: 20px; font-size: x-small;">
-                                0
-                                <span class="visually-hidden">Items In Cart</span>
-                            </span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="material-symbols-outlined" style="font-size: xx-large;" onclick="document.getElementById('editItemButton').click();">
+                            production_quantity_limits
                         </span>
-                    </a>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="material-symbols-outlined" style="font-size: xx-large;" onclick="document.getElementById('addItemButton').click();">
+                            add_shopping_cart
+                        </span>
+                    </a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <form id="addProductsForm">
-        <label for="id">ID:</label>
-        <input type="number" id="id" name="id"><br><br>
-		<label for="title">Title:</label>
-        <input type="text" id="title" name="title"><br><br>
-		<label for="price">Price:</label>
-        <input type="text" id="price" name="price"><br><br>
-		<label for="description">Description:</label>
-        <input type="text" id="description" name="description"><br><br>
-		<label for="category">Category:</label>
-        <input type="text" id="category" name="category"><br><br>
-		<label for="imageURL">Image URL:</label>
-        <input type="text" id="imageURL" name="imageURL"><br><br>
-		<label for="rating">Rating:</label>
-        <input type="text" id="rating" name="rating"><br><br>
-        <label for="count">Number of Ratings:</label>
-        <input type="number" id="count" name="count"><br><br>
-        <button type="submit">Submit</button>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex: 1; padding: 20px;">
+            <h3 class="playfair-display-1" style="font-size: xx-large; text-align: center; padding-bottom: 20px;">Users</h3>
+            <div id="userView"></div>
+        </div>
+        <div style="width: 1px; background-color: lightgray; margin: 20px 0px;"></div>
+        <div style="flex: 1; padding: 20px;">
+            <h3 class="playfair-display-1" style="font-size: xx-large; text-align: center; padding-bottom: 20px;">Products</h3>
+            <div id="productView"></div>
+        </div>
+    </div>
 
-		<div class="mb-3">
-			<label for="exampleFormControlInput1" class="form-label">Email address</label>
-			<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-		</div>
-		<div class="mb-3">
-			<label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-			<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-		</div>
-    </form>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal" style="display: none;" id="addItemButton">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="addItemModalLabel">Add Items</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductsForm" style="padding: 20px;">
+                        <div class="mb-3">
+                            <label for="title" class="form-label" style="font-size: large;">Title:</label>
+                            <input class="form-control" id="title" rows="1" name="title"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label" style="font-size: large;">Description:</label>
+                            <input class="form-control" id="description" rows="3" name="description"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label" style="font-size: large;">Category:</label>
+                            <input class="form-control" id="category" rows="1" name="category"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label" style="font-size: large;">Price:</label>
+                            <input class="form-control" id="price" rows="1" name="price"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageURL" class="form-label" style="font-size: large;">Image URL:</label>
+                            <input class="form-control" id="imageURL" rows="1" name="imageURL"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label" style="font-size: large;">Rating:</label>
+                            <input class="form-control" id="rating" rows="1" name="rating"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="count" class="form-label" style="font-size: large;">Number Of Ratings:</label>
+                            <input class="form-control" id="count" rows="1" name="count"></input>
+                        </div>
+                        <button type="button submit" class="btn btn-outline-primary" style="margin-top: 20px; width: 100px; height: 40px; font-size: large;">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editItemModal" style="display: none;" id="editItemButton">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="editItemModalLabel">Update Item Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductsForm" style="padding: 20px;">
+                        <div style="color: rgb(150, 150, 150); font-size: x-large; text-align: center;">Leave Fields That Don't Need To Be Updated Empty</div>
+                        <div class="mb-3">
+                            <label for="idProduct" class="form-label" style="font-size: large;">ID*:</label>
+                            <input class="form-control" id="idProduct" rows="1" name="idProduct"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label" style="font-size: large;">Title:</label>
+                            <input class="form-control" id="title" rows="1" name="title"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label" style="font-size: large;">Description:</label>
+                            <input class="form-control" id="description" rows="3" name="description"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label" style="font-size: large;">Category:</label>
+                            <input class="form-control" id="category" rows="1" name="category"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label" style="font-size: large;">Price:</label>
+                            <input class="form-control" id="price" rows="1" name="price"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageURL" class="form-label" style="font-size: large;">Image URL:</label>
+                            <input class="form-control" id="imageURL" rows="1" name="imageURL"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label" style="font-size: large;">Rating:</label>
+                            <input class="form-control" id="rating" rows="1" name="rating"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="count" class="form-label" style="font-size: large;">Number Of Ratings:</label>
+                            <input class="form-control" id="count" rows="1" name="count"></input>
+                        </div>
+                        <button type="button submit" class="btn btn-outline-primary" style="margin-top: 20px; width: 100px; height: 40px; font-size: large;">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="exampleModalLabel">Account Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-indicators" style="display: none;">
+                            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" id="accountGotoAccount"></button>
+                            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2" id="accountGotoAddressSave"></button>
+                            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3" id="accountGotoPhoneNumberSave"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div id="emailAccount" style="margin: 10px 20px; width: 90%; font-size: large;"></div>
+                                <div id="phoneNumberAccount" style="margin: 10px 20px; width: 90%; font-size: large;"></div>
+                                <div id="homeAddressAccount" style="margin: 10px 20px; width: 90%; font-size: large;"></div>
+                                <ul style="margin: 10px 37.5px; width: 90%; font-size: large; list-style: circle;">
+                                </ul>
+                                <button type="button" class="btn btn-outline-primary" style="margin: 10px 20px; flex: 1; width: 40%;" onclick="onPasswordChange()">Change Password</button>
+                                <button type="button" class="btn btn-outline-primary" style="margin: 10px 20px; flex: 1; width: 40%;" onclick="onLogout()">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="accountClose">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#accountModal" style="visibility: hidden;" id="AccountButton">
+        Launch demo modal
+    </button>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal" id="card-button" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="exampleModalLabel">Item Description</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg" style="height: 55vh; padding-left: 20px; padding: 20px;" class="img-fluid rounded-start" alt="Card Image" id="card-image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h4 class="card-title" style="font-weight: bold; padding-top: 30px;" id="card-title">Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) - Super Ultrawide Screen QLED</h4>
+                                    <p class="card-text" id="card-description">49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag.</p>
+                                    <p class="card-text"><small class="text-body-secondary" style="text-transform: capitalize;"  id="card-category">electronics</small></p>
+                                    <p style="font-size: large;" class="card-price" id="card-price">999.99</p>
+                                    <div style="display: flex; flex-wrap: wrap;">
+                                        <div style="flex: 1.5; padding: 10px 10px 10px 0px;">
+                                            <p style="margin-bottom: 20px;"><b>Audience Rating</b></p>
+                                            <div class="progress" role="progressbar" aria-label="Warning example" style="height: 30px; position: relative;">
+                                                <div class="progress-bar bg-warning" style="width: 10%;" id="card-rating-progress">
+                                                    <b style="font-size: large; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" id="card-rating-text">1.0</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="flex: 1.5; padding: 10px 10px 0px 10px;">
+                                            <p style="margin-bottom: 15px;"><b>Number of Ratings</b></p>
+                                            <p style="font-size: x-large;" id="card-count">130</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="card-close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previousOrdersModal" id="previousOrdersModalOpenButton" style="visibility: hidden;">
+        Launch demo modal
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="previousOrdersModal" tabindex="-1" aria-labelledby="previousOrdersModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2 playfair-display-1" id="previousOrdersModalLabel">Previous Orders</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExample" class="carousel slide" style="height: 450px; overflow-y: scroll;">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" id="previousOrdersModalItems" style="padding: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="spinner-border text-info" role="status" style="position: fixed; top: 50%; left: 50%; height: 100px; width: 100px; margin-left: -50px; margin-top: -100px; z-index: 2000; display: none;" id="spinner-circle">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    
 	<script src="./scripts/admin/firebase.js"></script>
+    <script src="./scripts/admin/account.js"></script>
+    <script src="./scripts/admin/CardRetrieval.js"></script>
+    <script src="./scripts/admin/previousOrders.js"></script>
+    <script src="./scripts/admin/userView.js"></script>
 </body>
 </html>
