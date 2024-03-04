@@ -46,6 +46,12 @@
     background-color: white;
 }
 
+.more-products {
+    height: 150px; 
+    width: 150px;
+    background-color: white;
+}
+
 .truncate-top {
     display: -webkit-box;
     -webkit-box-orient: vertical;
